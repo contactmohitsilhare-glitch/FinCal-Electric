@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — FinCal Electric</title>
+    <meta name="description"
+        content="Learn about FinCal Electric — a premium scientific financial calculator built with modern web technologies.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav" id="main-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"><i class="fas fa-bolt"></i></div>
+                FinCal Electric
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Calculator</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+            </ul>
+            <div style="display:flex; align-items:center;">
+                <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <!-- Hero -->
+        <section class="hero" style="padding:100px 0 80px;">
+            <div class="hero-bg"></div>
+            <div class="container hero-content">
+                <div class="hero-badge"><i class="fas fa-info-circle"></i> About the Project</div>
+                <h1 class="hero-title">
+                    Built with<br>
+                    <span class="gradient-text">Passion & Precision</span>
+                </h1>
+                <p class="hero-subtitle">
+                    FinCal Electric is a love letter to beautiful, functional web applications. No frameworks. No build
+                    tools. Just clean code and great design.
+                </p>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="section">
+            <div class="container">
+                <div class="about-intro animate-on-scroll">
+                    <div class="about-text">
+                        <h2>Why FinCal Electric?</h2>
+                        <p>
+                            Most financial calculators online look like they were built in 2005 and never updated. They
+                            get the job done, but they don't make you <em>want</em> to explore your financial future.
+                        </p>
+                        <p>
+                            We wanted to change that. FinCal Electric combines the depth of a scientific calculator with
+                            the intelligence of a financial planner — wrapped in a design that feels alive. Every
+                            gradient, every animation, every micro-interaction is crafted by hand.
+                        </p>
+                        <p>
+                            The result? A tool that doesn't just calculate numbers — it helps you
+                            <strong>understand</strong> and <strong>visualize</strong> your money's journey.
+                        </p>
+                    </div>
+                    <div class="about-visual">
+                        <div class="about-visual-circle"></div>
+                        <div class="about-visual-icon">⚡</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-eyebrow">What's Inside</div>
+                    <h2 class="section-title">Feature Highlights</h2>
+                    <p class="section-desc">Everything you need for number crunching, all running in your browser with
+                        zero server calls.</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card animate-on-scroll delay-1">
+                        <div style="font-size:2.5rem; margin-bottom:16px;">🧮</div>
+                        <h3 style="font-weight:700; margin-bottom:10px;">Scientific Calculator</h3>
+                        <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.7;">
+                            Trigonometry, logarithms, factorials, powers, constants (π, e), memory operations —
+                            everything a scientific calculator should have.
+                        </p>
+                    </div>
+                    <div class="card animate-on-scroll delay-2">
+                        <div style="font-size:2.5rem; margin-bottom:16px;">📊</div>
+                        <h3 style="font-weight:700; margin-bottom:10px;">Live Visualizations</h3>
+                        <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.7;">
+                            Interactive Chart.js graphs that update in real-time as you adjust sliders. See your growth
+                            trajectory and portfolio mix at a glance.
+                        </p>
+                    </div>
+                    <div class="card animate-on-scroll delay-3">
+                        <div style="font-size:2.5rem; margin-bottom:16px;">🌓</div>
+                        <h3 style="font-weight:700; margin-bottom:10px;">Dual Themes</h3>
+                        <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.7;">
+                            A warm light mode with sunrise gradients and a sleek dark mode with deep indigo tones. Each
+                            theme is fully custom-designed.
+                        </p>
+                    </div>
+                    <div class="card animate-on-scroll delay-1">
+                        <div style="font-size:2.5rem; margin-bottom:16px;">🔗</div>
+                        <h3 style="font-weight:700; margin-bottom:10px;">Calc ↔ Finance Bridge</h3>
+                        <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.7;">
+                            Transfer results from the scientific calculator directly into financial sliders. Click stat
+                            cards to load values back. Seamless workflow.
+                        </p>
+                    </div>
+                    <div class="card animate-on-scroll delay-2">
+                        <div style="font-size:2.5rem; margin-bottom:16px;">📱</div>
+                        <h3 style="font-weight:700; margin-bottom:10px;">Fully Responsive</h3>
+                        <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.7;">
+                            Works beautifully on desktop, tablet, and mobile. The three-column layout gracefully
+                            collapses into a single column on smaller screens.
+                        </p>
+                    </div>
+                    <div class="card animate-on-scroll delay-3">
+                        <div style="font-size:2.5rem; margin-bottom:16px;">⚡</div>
+                        <h3 style="font-weight:700; margin-bottom:10px;">Zero Dependencies</h3>
+                        <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.7;">
+                            No React, no Webpack, no npm install. Just HTML, CSS, and JavaScript with Chart.js and Font
+                            Awesome via CDN. Open and go.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-eyebrow">Under the Hood</div>
+                    <h2 class="section-title">Technology Stack</h2>
+                </div>
+
+                <div class="grid-4 animate-on-scroll">
+                    <div
+                        style="text-align:center; padding:28px 20px; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-md);">
+                        <div style="font-size:2.5rem; margin-bottom:12px;">
+                            <i class="fab fa-html5" style="color:#E34F26;"></i>
+                        </div>
+                        <h4 style="font-weight:700; margin-bottom:6px;">HTML5</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">Semantic structure</p>
+                    </div>
+                    <div
+                        style="text-align:center; padding:28px 20px; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-md);">
+                        <div style="font-size:2.5rem; margin-bottom:12px;">
+                            <i class="fab fa-css3-alt" style="color:#1572B6;"></i>
+                        </div>
+                        <h4 style="font-weight:700; margin-bottom:6px;">CSS3</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">Custom properties, animations</p>
+                    </div>
+                    <div
+                        style="text-align:center; padding:28px 20px; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-md);">
+                        <div style="font-size:2.5rem; margin-bottom:12px;">
+                            <i class="fab fa-js" style="color:#F7DF1E;"></i>
+                        </div>
+                        <h4 style="font-weight:700; margin-bottom:6px;">JavaScript</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">ES6+ vanilla logic</p>
+                    </div>
+                    <div
+                        style="text-align:center; padding:28px 20px; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-md);">
+                        <div style="font-size:2.5rem; margin-bottom:12px;">
+                            <i class="fas fa-chart-pie" style="color:#FF6384;"></i>
+                        </div>
+                        <h4 style="font-weight:700; margin-bottom:6px;">Chart.js</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">Interactive charts</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Open Source -->
+        <section class="section" style="text-align:center;">
+            <div class="container animate-on-scroll">
+                <div class="section-header" style="margin-bottom:32px;">
+                    <div class="section-eyebrow">Open Source</div>
+                    <h2 class="section-title">Free & Open</h2>
+                    <p class="section-desc">
+                        FinCal Electric is open-source under the MIT License. Use it, modify it, learn from it, or
+                        contribute to it.
+                    </p>
+                </div>
+                <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                    <a href="https://github.com/contactmohitsilhare-glitch/FinCal-Electric" target="_blank"
+                        class="btn btn-primary">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-calculator"></i> Open Calculator
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">⚡ FinCal Electric</div>
+            <div class="footer-links">
+                <a href="index.html">Calculator</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="about.html">About</a>
+            </div>
+            <p style="margin-top:20px;">© 2026 FinCal Electric. Precision meets beauty.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works — FinCal Electric</title>
+    <meta name="description"
+        content="Understand the mathematics behind SIP, Lumpsum, and compound interest calculations used in FinCal Electric.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav" id="main-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"><i class="fas fa-bolt"></i></div>
+                FinCal Electric
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Calculator</a></li>
+                <li><a href="how-it-works.html" class="active">How It Works</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div style="display:flex; align-items:center;">
+                <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <!-- Hero -->
+        <section class="hero" style="padding:100px 0 80px;">
+            <div class="hero-bg"></div>
+            <div class="container hero-content">
+                <div class="hero-badge"><i class="fas fa-book-open"></i> Understanding the Math</div>
+                <h1 class="hero-title">
+                    How Your Money<br>
+                    <span class="gradient-text">Actually Grows</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Behind every number on our calculator is a well-known financial formula. Here's a plain-English
+                    breakdown of what's happening under the hood.
+                </p>
+            </div>
+        </section>
+
+        <!-- SIP Formula -->
+        <section class="section">
+            <div class="container">
+                <div class="formula-card animate-on-scroll">
+                    <div class="formula-card-header">
+                        <div class="formula-number" style="background:var(--bg-gradient-hero);">1</div>
+                        <div>
+                            <h3>SIP — Systematic Investment Plan</h3>
+                            <p>Invest a fixed amount every month and let compound interest do the heavy lifting.</p>
+                        </div>
+                    </div>
+                    <div class="formula-card-body">
+                        <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+                            A SIP works by investing a consistent amount at regular intervals (typically monthly). Each
+                            installment earns compound interest from the date it's invested until the maturity date. The
+                            magic is that early installments compound for much longer, creating an exponential growth
+                            curve.
+                        </p>
+
+                        <div class="formula-box">
+                            <div class="formula-math">FV = P × [(1 + r)ⁿ − 1] / r × (1 + r)</div>
+                        </div>
+
+                        <div class="formula-legend">
+                            <div class="legend-item">
+                                <span class="legend-symbol">FV</span>
+                                <span>Future Value — the total amount you'll have at the end</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-symbol">P</span>
+                                <span>Monthly investment amount (e.g. ₹10,000)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-symbol">r</span>
+                                <span>Monthly interest rate = Annual Rate ÷ 12 ÷ 100</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-symbol">n</span>
+                                <span>Total number of months = Years × 12</span>
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <div class="example-title"><i class="fas fa-flask"></i> Worked Example</div>
+                            <ol class="example-steps">
+                                <li>You invest <strong>₹10,000/month</strong> for <strong>20 years</strong> at
+                                    <strong>12% annual return</strong></li>
+                                <li>Monthly rate: <strong>r = 12 ÷ 12 ÷ 100 = 0.01</strong></li>
+                                <li>Total months: <strong>n = 20 × 12 = 240</strong></li>
+                                <li>Plug into formula: FV = 10,000 × [(1.01)²⁴⁰ − 1] / 0.01 × 1.01</li>
+                                <li>Total invested: <strong>₹24,00,000</strong> (₹24 Lakh)</li>
+                                <li>Final value: <strong>≈ ₹99,91,479</strong> (nearly ₹1 Crore!)</li>
+                                <li>Wealth created by compounding: <strong>≈ ₹75,91,479</strong></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lumpsum Formula -->
+                <div class="formula-card animate-on-scroll">
+                    <div class="formula-card-header">
+                        <div class="formula-number" style="background:var(--bg-gradient-mint);">2</div>
+                        <div>
+                            <h3>Lumpsum — One-Time Investment</h3>
+                            <p>Invest a large amount once and watch it compound over time.</p>
+                        </div>
+                    </div>
+                    <div class="formula-card-body">
+                        <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+                            A lumpsum investment is the simplest form of compound interest. You put in a single amount,
+                            and it grows year after year. There are no additional contributions — just pure compounding
+                            on your initial principal.
+                        </p>
+
+                        <div class="formula-box">
+                            <div class="formula-math">A = P × (1 + r/n)^(n×t)</div>
+                        </div>
+
+                        <div class="formula-legend">
+                            <div class="legend-item">
+                                <span class="legend-symbol">A</span>
+                                <span>Final amount after compounding</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-symbol">P</span>
+                                <span>Principal — the amount you invest once</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-symbol">r</span>
+                                <span>Annual interest rate (as a decimal)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-symbol">n</span>
+                                <span>Number of times compounded per year (12 for monthly)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-symbol">t</span>
+                                <span>Time in years</span>
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <div class="example-title"><i class="fas fa-flask"></i> Worked Example</div>
+                            <ol class="example-steps">
+                                <li>You invest <strong>₹5,00,000</strong> once at <strong>12% annual return</strong> for
+                                    <strong>15 years</strong></li>
+                                <li>Monthly compounding: <strong>r/n = 0.12/12 = 0.01</strong></li>
+                                <li>Total compounding periods: <strong>n×t = 12 × 15 = 180</strong></li>
+                                <li>A = 5,00,000 × (1.01)¹⁸⁰</li>
+                                <li>Final value: <strong>≈ ₹29,95,992</strong></li>
+                                <li>Your money grew <strong>~6x</strong> without any additional investment!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compound Interest Explained -->
+                <div class="formula-card animate-on-scroll">
+                    <div class="formula-card-header">
+                        <div class="formula-number" style="background:var(--bg-gradient-warm);">3</div>
+                        <div>
+                            <h3>The Power of Compounding</h3>
+                            <p>Why Einstein called it the "eighth wonder of the world."</p>
+                        </div>
+                    </div>
+                    <div class="formula-card-body">
+                        <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+                            Compound interest means you earn interest on your interest. In the first year, you earn
+                            returns only on your principal. But from the second year onwards, you earn returns on your
+                            principal <em>plus</em> all the interest you've already earned. This creates an exponential
+                            curve.
+                        </p>
+
+                        <div
+                            style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:24px; margin:28px 0;">
+                            <div
+                                style="padding:24px; background:var(--card-bg-alt); border-radius:var(--radius-md); border:1px solid var(--card-border);">
+                                <div style="font-size:2rem; margin-bottom:8px;">📈</div>
+                                <h4 style="font-weight:700; margin-bottom:8px;">Simple Interest</h4>
+                                <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.7;">
+                                    You earn a fixed percentage of the <em>original</em> amount each year. ₹100 at 10%
+                                    always earns ₹10/year. After 10 years: ₹200.
+                                </p>
+                            </div>
+                            <div
+                                style="padding:24px; background:var(--card-bg-alt); border-radius:var(--radius-md); border:1px solid var(--card-border);">
+                                <div style="font-size:2rem; margin-bottom:8px;">🚀</div>
+                                <h4 style="font-weight:700; margin-bottom:8px;">Compound Interest</h4>
+                                <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.7;">
+                                    You earn a percentage of the <em>growing</em> amount. ₹100 at 10% compounds to ₹110,
+                                    then ₹121, then ₹133... After 10 years: <strong>₹259</strong>.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="formula-box">
+                            <div class="formula-math" style="font-size:1.1rem;">
+                                Rule of 72: Years to double ≈ 72 ÷ Rate
+                            </div>
+                        </div>
+                        <p style="text-align:center; color:var(--text-muted); font-size:0.9rem; margin-top:12px;">
+                            At 12% returns, your money doubles roughly every <strong>6 years</strong>.
+                            At 8%, it takes about <strong>9 years</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Opportunity Cost -->
+                <div class="formula-card animate-on-scroll">
+                    <div class="formula-card-header">
+                        <div class="formula-number" style="background:var(--bg-gradient-accent);">4</div>
+                        <div>
+                            <h3>Opportunity Cost of Waiting</h3>
+                            <p>Why starting early matters more than investing more.</p>
+                        </div>
+                    </div>
+                    <div class="formula-card-body">
+                        <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+                            Our "Opportunity Cost" panel compares what you'd have if you start <strong>now</strong>
+                            versus starting <strong>5 years later</strong> with the same monthly amount. The difference
+                            is often shocking because those early years give your money the longest runway to compound.
+                        </p>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:24px 0;">
+                            <div
+                                style="padding:24px; background:rgba(102,126,234,0.05); border-radius:var(--radius-md); border:1px solid rgba(102,126,234,0.1); text-align:center;">
+                                <div
+                                    style="font-size:0.82rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">
+                                    Start Now (20 yrs)</div>
+                                <div
+                                    style="font-size:1.8rem; font-weight:900; color:var(--accent-primary); font-family:'JetBrains Mono',monospace;">
+                                    ≈ ₹1 Cr</div>
+                                <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:4px;">₹10K/month
+                                    at 12%</div>
+                            </div>
+                            <div
+                                style="padding:24px; background:rgba(241,39,17,0.04); border-radius:var(--radius-md); border:1px solid rgba(241,39,17,0.1); text-align:center;">
+                                <div
+                                    style="font-size:0.82rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">
+                                    Start 5 Yrs Late (15 yrs)</div>
+                                <div
+                                    style="font-size:1.8rem; font-weight:900; color:var(--danger); font-family:'JetBrains Mono',monospace;">
+                                    ≈ ₹50 L</div>
+                                <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:4px;">Same
+                                    ₹10K/month at 12%</div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="padding:16px; background:rgba(241,39,17,0.06); border-radius:var(--radius-sm); text-align:center; color:var(--danger); font-weight:600;">
+                            5 years of delay costs you roughly <strong>₹50 Lakh</strong> in this scenario!
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="section" style="text-align:center;">
+            <div class="container animate-on-scroll">
+                <div class="section-header" style="margin-bottom:32px;">
+                    <div class="section-eyebrow">Ready?</div>
+                    <h2 class="section-title">Try It Yourself</h2>
+                    <p class="section-desc">Now that you understand the math, go play with the numbers.</p>
+                </div>
+                <a href="index.html" class="btn btn-primary" style="font-size:1.1rem; padding:16px 40px;">
+                    <i class="fas fa-calculator"></i> Open Calculator
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">⚡ FinCal Electric</div>
+            <div class="footer-links">
+                <a href="index.html">Calculator</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="about.html">About</a>
+            </div>
+            <p style="margin-top:20px;">© 2026 FinCal Electric. Precision meets beauty.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

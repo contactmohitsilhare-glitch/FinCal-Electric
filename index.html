@@ -3,593 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinCal Scientific | Electric Theme</title>
+    <title>FinCal Electric — Scientific Financial Calculator</title>
+    <meta name="description" content="A premium scientific financial calculator with SIP, Lumpsum, and Target calculations. Beautiful visualizations powered by Chart.js.">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        :root {
-            /* LIGHT THEME - Sky & Clouds */
-            --bg-gradient: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-            --card-bg: #ffffff;
-            --text-primary: #2d3748;
-            --text-secondary: #4a5568;
-            
-            --accent-primary: #4299e1; /* Bright Sky Blue */
-            --accent-secondary: #667eea; /* Indigo */
-            
-            --success: #48bb78;
-            --warning: #ed8936;
-            --danger: #f56565;
-            
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --shadow-light: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        [data-theme="dark"] {
-            /* DARK THEME - Midnight Cyberpunk */
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --card-bg: rgba(30, 41, 59, 0.9);
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            
-            --accent-primary: #06b6d4; /* Neon Cyan */
-            --accent-secondary: #8b5cf6; /* Neon Violet */
-            
-            --success: #34d399;
-            --warning: #fbbf24;
-            --danger: #f87171;
-            
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --shadow-light: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: var(--text-primary);
-            transition: color 0.3s;
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .container { max-width: 1600px; margin: 0 auto; padding: 20px; }
-        
-        .theme-toggle {
-            position: fixed; top: 20px; right: 20px; z-index: 1000;
-            background: var(--card-bg); border: 1px solid var(--glass-border);
-            padding: 10px 20px; border-radius: 50px; cursor: pointer;
-            font-weight: 600; display: flex; align-items: center; gap: 10px;
-            box-shadow: var(--shadow-light); backdrop-filter: blur(10px);
-            transition: transform 0.3s; color: var(--text-primary);
-        }
-        .theme-toggle:hover { transform: scale(1.05); }
-        
-        .header {
-            text-align: center; color: white; margin-bottom: 40px; padding: 20px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            animation: fadeInDown 0.8s ease-out;
-        }
-        @keyframes fadeInDown { from{opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);} }
-        
-        .main-layout {
-            display: grid; grid-template-columns: 360px 1fr 380px; gap: 25px;
-        }
-        @media (max-width: 1400px) { .main-layout { grid-template-columns: 1fr; } }
-        
-        /* Common Panels */
-        .calc-panel, .controls-panel, .stat-card, .graph-card, .insight-card {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 25px;
-            box-shadow: var(--shadow-light);
-            backdrop-filter: blur(10px);
-            opacity: 0; animation: slideUp 0.6s ease forwards;
-        }
-        
-        .stat-card:nth-child(1){animation-delay: 0.1s}
-        .stat-card:nth-child(2){animation-delay: 0.2s}
-        .stat-card:nth-child(3){animation-delay: 0.3s}
-        
-        @keyframes slideUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
-        
-        /* Calculator */
-        .calc-display {
-            background: #1a202c; color: #68d391; font-family: 'JetBrains Mono';
-            padding: 20px; border-radius: 16px; margin-bottom: 20px; text-align: right;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
-        }
-        
-        .calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-        .calc-btn {
-            padding: 14px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;
-            transition: all 0.2s;
-        }
-        .calc-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
-        .btn-number { background: var(--glass-border); color: var(--text-primary); }
-        .btn-operator { background: var(--accent-primary); color: white; }
-        .btn-sci { background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary); font-size: 0.9rem; }
-        .btn-equals { background: var(--success); color: white; grid-column: span 2; }
-        
-        .mem-btn {
-            flex: 1; padding: 8px; border: 1px solid var(--glass-border); background: var(--glass-border);
-            color: var(--text-primary); border-radius: 6px; cursor: pointer; font-size: 0.8rem; margin: 0 2px;
-        }
-        
-        .transfer-btn {
-            width: 100%; padding: 12px; margin-bottom: 10px;
-            border: 2px dashed var(--accent-primary); background: transparent; color: var(--text-primary);
-            border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.3s;
-        }
-        .transfer-btn:hover { background: var(--accent-primary); color: white; border-style: solid; }
-        
-        /* Stats */
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .stat-card { text-align: center; cursor: pointer; }
-        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
-        .stat-value {
-            font-size: 1.8rem; font-weight: 800;
-            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-family: 'JetBrains Mono';
-        }
-        .stat-label { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-        
-        /* Insights */
-        .insights-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        @media(max-width:900px){.insights-container{grid-template-columns:1fr;}}
-        
-        .insight-card { position: relative; overflow: hidden; }
-        .insight-card::before {
-            content:''; position:absolute; top:0; left:0; width:4px; height:100%;
-            background: linear-gradient(to bottom, var(--accent-primary), var(--success));
-        }
-        .insight-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .insight-icon {
-            width: 45px; height: 45px; border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-        }
-        
-        /* Progress Bar */
-        .progress-bar-bg { height: 12px; background: var(--glass-border); border-radius: 10px; overflow: hidden; }
-        .progress-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent-primary), var(--success)); transition: width 1s; }
-        
-        /* Gauge */
-        .gauge-needle {
-            transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        /* Comparison */
-        .comparison-bar {
-            transition: height 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .comparison-bar.primary { background: linear-gradient(to top, var(--accent-primary), var(--accent-secondary)); }
-        .comparison-bar.secondary { background: linear-gradient(to top, var(--warning), var(--danger)); }
-        
-        /* Controls */
-        .mode-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
-        .mode-tab {
-            padding: 8px 16px; border: none; background: transparent; cursor: pointer; font-weight: 600;
-            color: var(--text-secondary); border-radius: 8px; transition: all 0.3s;
-        }
-        .mode-tab.active { background: var(--accent-primary); color: white; box-shadow: 0 4px 12px var(--accent-primary) + 40%; }
-        
-        .slider {
-            width: 100%; height: 8px; border-radius: 4px; background: var(--glass-border); outline: none; appearance: none;
-        }
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
-            background: var(--accent-primary); cursor: pointer; border: 2px solid var(--card-bg);
-        }
-        
-        .value-badge { background: var(--accent-primary); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; font-family: 'JetBrains Mono'; }
-    </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-moon" id="theme-icon"></i>
-        <span id="theme-text">Switch Theme</span>
-    </button>
+    <!-- Navigation -->
+    <nav class="nav" id="main-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"><i class="fas fa-bolt"></i></div>
+                FinCal Electric
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Calculator</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div style="display:flex; align-items:center;">
+                <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-<div class="container">
-    <div class="header">
-        <h1 style="font-size:3rem; margin-bottom:10px;"><i class="fas fa-bolt"></i> FinCal Electric</h1>
-        <p style="font-size:1.1rem; opacity:0.9;">High Performance Financial Visualization</p>
+    <div class="page-content">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="container hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-sparkles"></i> Financial Intelligence, Simplified
+                </div>
+                <h1 class="hero-title">
+                    Calculate Your<br>
+                    <span class="gradient-text">Financial Future</span>
+                </h1>
+                <p class="hero-subtitle">
+                    A beautifully crafted calculator that combines scientific precision with powerful investment planning. See your money grow in real-time.
+                </p>
+                <div class="hero-actions">
+                    <a href="#calculator" class="btn btn-primary">
+                        <i class="fas fa-calculator"></i> Start Calculating
+                    </a>
+                    <a href="how-it-works.html" class="btn btn-secondary">
+                        <i class="fas fa-book-open"></i> Learn the Math
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Overview -->
+        <section class="section" id="overview">
+            <div class="container">
+                <div class="grid-3 animate-on-scroll">
+                    <div class="stat-card" onclick="loadInCalculator('invested')">
+                        <div class="stat-label">Total Invested</div>
+                        <div class="stat-value" id="stat-invested">₹24L</div>
+                    </div>
+                    <div class="stat-card" onclick="loadInCalculator('returns')">
+                        <div class="stat-label">Wealth Created</div>
+                        <div class="stat-value" id="stat-returns">₹86L</div>
+                    </div>
+                    <div class="stat-card" onclick="loadInCalculator('total')">
+                        <div class="stat-label">Final Corpus</div>
+                        <div class="stat-value" id="stat-total">₹1.1Cr</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Calculator Area -->
+        <section class="section" id="calculator">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-eyebrow">Workspace</div>
+                    <h2 class="section-title">Calculator & Planner</h2>
+                    <p class="section-desc">Use the scientific calculator for any computation, then transfer results directly into your investment projections.</p>
+                </div>
+
+                <div class="calc-layout">
+                    <!-- Left: Scientific Calculator -->
+                    <div class="calc-panel animate-on-scroll">
+                        <h3 style="margin-bottom:20px; font-weight:700; display:flex; align-items:center; gap:10px;">
+                            <span style="background:var(--bg-gradient-hero); -webkit-background-clip:text; -webkit-text-fill-color:transparent;"><i class="fas fa-calculator"></i></span>
+                            Scientific Calc
+                        </h3>
+
+                        <div class="calc-display">
+                            <div class="history" id="calc-history"></div>
+                            <div class="current" id="calc-display">0</div>
+                        </div>
+
+                        <div class="mem-row">
+                            <button class="mem-btn" onclick="memoryClear()">MC</button>
+                            <button class="mem-btn" onclick="memoryRecall()">MR</button>
+                            <button class="mem-btn" onclick="memoryAdd()">M+</button>
+                            <button class="mem-btn" onclick="memorySubtract()">M-</button>
+                            <button class="mem-btn" onclick="memoryStore()">MS</button>
+                        </div>
+
+                        <div class="calc-grid">
+                            <button class="calc-btn btn-sci" onclick="insertFunction('sin')">sin</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('cos')">cos</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('tan')">tan</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('log')">log</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('ln')">ln</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('sqrt')">√</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('pow')">x^y</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('pi')">π</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('e')">e</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('abs')">|x|</button>
+                            <button class="calc-btn btn-clear" onclick="clearAll()">AC</button>
+                            <button class="calc-btn btn-clear" style="background:var(--warning);color:#000;" onclick="clearEntry()">CE</button>
+                            <button class="calc-btn btn-sci" onclick="insert('(')">(</button>
+                            <button class="calc-btn btn-sci" onclick="insert(')')">)</button>
+                            <button class="calc-btn btn-operator" onclick="insertOperator('/')">÷</button>
+                            <button class="calc-btn btn-number" onclick="insert('7')">7</button>
+                            <button class="calc-btn btn-number" onclick="insert('8')">8</button>
+                            <button class="calc-btn btn-number" onclick="insert('9')">9</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('fact')">n!</button>
+                            <button class="calc-btn btn-operator" onclick="insertOperator('*')">×</button>
+                            <button class="calc-btn btn-number" onclick="insert('4')">4</button>
+                            <button class="calc-btn btn-number" onclick="insert('5')">5</button>
+                            <button class="calc-btn btn-number" onclick="insert('6')">6</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('inv')">1/x</button>
+                            <button class="calc-btn btn-operator" onclick="insertOperator('-')">−</button>
+                            <button class="calc-btn btn-number" onclick="insert('1')">1</button>
+                            <button class="calc-btn btn-number" onclick="insert('2')">2</button>
+                            <button class="calc-btn btn-number" onclick="insert('3')">3</button>
+                            <button class="calc-btn btn-sci" onclick="insertFunction('sq')">x²</button>
+                            <button class="calc-btn btn-operator" onclick="insertOperator('+')">+</button>
+                            <button class="calc-btn btn-number" onclick="insert('0')" style="grid-column:span 2;">0</button>
+                            <button class="calc-btn btn-number" onclick="insert('.')">.</button>
+                            <button class="calc-btn btn-sci" onclick="toggleSign()">+/−</button>
+                            <button class="calc-btn btn-equals" onclick="calculate()">=</button>
+                        </div>
+
+                        <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--card-border);">
+                            <button class="transfer-btn" onclick="transferToMonthly()"><i class="fas fa-arrow-right" style="margin-right:6px;"></i> Use as Monthly Investment</button>
+                            <button class="transfer-btn" onclick="transferToYears()"><i class="fas fa-arrow-right" style="margin-right:6px;"></i> Use as Years</button>
+                            <button class="transfer-btn" onclick="transferToRate()"><i class="fas fa-arrow-right" style="margin-right:6px;"></i> Use as Interest Rate</button>
+                        </div>
+                    </div>
+
+                    <!-- Center: Charts & Insights -->
+                    <div class="center-panel">
+                        <div class="insights-grid animate-on-scroll">
+                            <!-- Efficiency -->
+                            <div class="insight-card card-purple">
+                                <div class="insight-header">
+                                    <div class="insight-icon purple"><i class="fas fa-rocket"></i></div>
+                                    <div>
+                                        <div class="insight-title">Efficiency</div>
+                                        <div class="insight-subtitle">Returns vs Principal</div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom:14px;">
+                                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-weight:600; font-size:0.88rem;">
+                                        <span>Earnings Ratio</span>
+                                        <span id="efficiency-percent" style="color:var(--accent-primary);">78%</span>
+                                    </div>
+                                    <div class="progress-bg">
+                                        <div id="efficiency-bar" class="progress-fill" style="width:78%"></div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; font-size:0.88rem; color:var(--text-muted);">
+                                    <span>Inv: <strong id="eff-inv" style="color:var(--text-primary);">₹24L</strong></span>
+                                    <span>Gen: <strong id="eff-gen" style="color:var(--accent-primary);">₹86L</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- Velocity Gauge -->
+                            <div class="insight-card card-warm">
+                                <div class="insight-header">
+                                    <div class="insight-icon warm"><i class="fas fa-tachometer-alt"></i></div>
+                                    <div>
+                                        <div class="insight-title">Velocity</div>
+                                        <div class="insight-subtitle">Annual Growth Rate</div>
+                                    </div>
+                                </div>
+                                <div class="gauge-container">
+                                    <div class="gauge-arc">
+                                        <div class="gauge-bg"></div>
+                                        <div class="gauge-needle" id="velocity-needle"></div>
+                                    </div>
+                                    <div class="gauge-value" id="velocity-value">12%</div>
+                                </div>
+                            </div>
+
+                            <!-- Opportunity Cost -->
+                            <div class="insight-card card-green">
+                                <div class="insight-header">
+                                    <div class="insight-icon green"><i class="fas fa-hourglass-half"></i></div>
+                                    <div>
+                                        <div class="insight-title">Opportunity Cost</div>
+                                        <div class="insight-subtitle">Now vs 5 Yrs Later</div>
+                                    </div>
+                                </div>
+                                <div class="comparison-wrap">
+                                    <div class="comp-bar-col">
+                                        <div id="bar-now" class="comp-bar primary" style="height:120px;"></div>
+                                        <div class="comp-label" id="value-now">₹1.1Cr</div>
+                                    </div>
+                                    <div class="vs-badge">VS</div>
+                                    <div class="comp-bar-col">
+                                        <div id="bar-later" class="comp-bar secondary" style="height:60px;"></div>
+                                        <div class="comp-label" id="value-later">₹58L</div>
+                                    </div>
+                                </div>
+                                <div class="loss-banner">
+                                    Loss of <strong id="loss-amount">₹52L</strong> by waiting
+                                </div>
+                            </div>
+
+                            <!-- Milestones -->
+                            <div class="insight-card card-blue">
+                                <div class="insight-header">
+                                    <div class="insight-icon blue"><i class="fas fa-flag-checkered"></i></div>
+                                    <div>
+                                        <div class="insight-title">Milestones</div>
+                                        <div class="insight-subtitle">Targets Hit</div>
+                                    </div>
+                                </div>
+                                <div id="milestone-container" class="milestone-timeline"></div>
+                            </div>
+                        </div>
+
+                        <!-- Growth Chart -->
+                        <div class="chart-card animate-on-scroll">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Growth Trajectory</h3>
+                                <button class="chart-toggle" onclick="toggleChartType()"><i class="fas fa-chart-bar"></i> Toggle View</button>
+                            </div>
+                            <div style="position:relative; height:320px;">
+                                <canvas id="mainChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Pie Chart -->
+                        <div class="chart-card animate-on-scroll" style="margin-top:24px;">
+                            <h3 class="chart-title" style="margin-bottom:20px;">Portfolio Mix</h3>
+                            <div style="position:relative; height:220px;">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Controls -->
+                    <div class="controls-panel animate-on-scroll">
+                        <div class="mode-tabs">
+                            <button class="mode-tab active" onclick="setFinancialMode('sip', this)">SIP</button>
+                            <button class="mode-tab" onclick="setFinancialMode('lumpsum', this)">Lumpsum</button>
+                            <button class="mode-tab" onclick="setFinancialMode('target', this)">Target</button>
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span class="slider-label">Monthly Investment</span>
+                                <span class="slider-value" id="val-amount">₹10,000</span>
+                            </div>
+                            <input type="range" class="slider" id="amount" min="1000" max="100000" step="1000" value="10000">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span class="slider-label">Time Period</span>
+                                <span class="slider-value" id="val-years">20 Years</span>
+                            </div>
+                            <input type="range" class="slider" id="years" min="1" max="40" step="1" value="20">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span class="slider-label">Expected Return</span>
+                                <span class="slider-value" id="val-rate">12%</span>
+                            </div>
+                            <input type="range" class="slider" id="rate" min="1" max="30" step="0.5" value="12">
+                        </div>
+
+                        <!-- Quick Tips -->
+                        <div style="margin-top:32px; padding:20px; background:var(--card-bg-alt); border-radius:var(--radius-md); border:1px solid var(--card-border);">
+                            <h4 style="font-size:0.9rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; color:var(--accent-primary);">
+                                <i class="fas fa-lightbulb"></i> Quick Tip
+                            </h4>
+                            <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.7;">
+                                Click any stat card above to load that value into the calculator. Use the transfer buttons on the calculator to push results into sliders.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div class="main-layout">
-        <!-- Calculator -->
-        <div class="calc-panel">
-            <h3 style="margin-bottom:20px; color:var(--text-primary);"><i class="fas fa-calculator" style="color:var(--accent-primary)"></i> Calc</h3>
-            <div class="calc-display">
-                <div id="calc-history" style="font-size:0.9rem; color:#4fd1c5; opacity:0.7"></div>
-                <div id="calc-display" style="font-size:1.8rem;">0</div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">⚡ FinCal Electric</div>
+            <div class="footer-links">
+                <a href="index.html">Calculator</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="about.html">About</a>
             </div>
-            <div style="display:flex; gap:5px; margin-bottom:20px;">
-                <button class="mem-btn" onclick="memoryClear()">MC</button>
-                <button class="mem-btn" onclick="memoryRecall()">MR</button>
-                <button class="mem-btn" onclick="memoryAdd()">M+</button>
-                <button class="mem-btn" onclick="memorySubtract()">M-</button>
-                <button class="mem-btn" onclick="memoryStore()">MS</button>
-            </div>
-            <div class="calc-grid">
-                <button class="calc-btn btn-sci" onclick="insertFunction('sin')">sin</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('cos')">cos</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('tan')">tan</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('log')">log</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('ln')">ln</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('sqrt')">√</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('pow')">x^y</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('pi')">π</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('e')">e</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('abs')">|x|</button>
-                <button class="calc-btn" style="background:var(--danger); color:white;" onclick="clearAll()">AC</button>
-                <button class="calc-btn" style="background:var(--warning); color:black;" onclick="clearEntry()">CE</button>
-                <button class="calc-btn btn-sci" onclick="insert('(')">(</button>
-                <button class="calc-btn btn-sci" onclick="insert(')')">)</button>
-                <button class="calc-btn btn-operator" onclick="insertOperator('/')">÷</button>
-                <button class="calc-btn btn-number" onclick="insert('7')">7</button>
-                <button class="calc-btn btn-number" onclick="insert('8')">8</button>
-                <button class="calc-btn btn-number" onclick="insert('9')">9</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('fact')">n!</button>
-                <button class="calc-btn btn-operator" onclick="insertOperator('*')">×</button>
-                <button class="calc-btn btn-number" onclick="insert('4')">4</button>
-                <button class="calc-btn btn-number" onclick="insert('5')">5</button>
-                <button class="calc-btn btn-number" onclick="insert('6')">6</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('inv')">1/x</button>
-                <button class="calc-btn btn-operator" onclick="insertOperator('-')">−</button>
-                <button class="calc-btn btn-number" onclick="insert('1')">1</button>
-                <button class="calc-btn btn-number" onclick="insert('2')">2</button>
-                <button class="calc-btn btn-number" onclick="insert('3')">3</button>
-                <button class="calc-btn btn-sci" onclick="insertFunction('sq')">x²</button>
-                <button class="calc-btn btn-operator" onclick="insertOperator('+')">+</button>
-                <button class="calc-btn btn-number" onclick="insert('0')" style="grid-column:span 2;">0</button>
-                <button class="calc-btn btn-number" onclick="insert('.')">.</button>
-                <button class="calc-btn btn-sci" onclick="toggleSign()">+/−</button>
-                <button class="calc-btn btn-equals" onclick="calculate()">=</button>
-            </div>
-            <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--glass-border);">
-                <button class="transfer-btn" onclick="transferToMonthly()">Use as Monthly Inv →</button>
-                <button class="transfer-btn" onclick="transferToYears()">Use as Years →</button>
-                <button class="transfer-btn" onclick="transferToRate()">Use as Interest Rate →</button>
-            </div>
+            <p style="margin-top:20px;">© 2026 FinCal Electric. Precision meets beauty.</p>
         </div>
+    </footer>
 
-        <!-- Center Panel -->
-        <div class="center-panel">
-            <div class="stats-grid">
-                <div class="stat-card" onclick="loadInCalculator('invested')">
-                    <div class="stat-label">Total Invested</div>
-                    <div class="stat-value" id="stat-invested">₹24L</div>
-                </div>
-                <div class="stat-card" onclick="loadInCalculator('returns')">
-                    <div class="stat-label">Wealth Created</div>
-                    <div class="stat-value" id="stat-returns">₹86L</div>
-                </div>
-                <div class="stat-card" onclick="loadInCalculator('total')">
-                    <div class="stat-label">Final Corpus</div>
-                    <div class="stat-value" id="stat-total">₹1.1Cr</div>
-                </div>
-            </div>
-
-            <div class="insights-container">
-                <div class="insight-card">
-                    <div class="insight-header">
-                        <div class="insight-icon"><i class="fas fa-rocket"></i></div>
-                        <div><div style="font-weight:700; color:var(--text-primary)">Efficiency</div><div style="font-size:0.85rem; color:var(--text-secondary)">Returns vs Principal</div></div>
-                    </div>
-                    <div style="margin-bottom:15px;">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-weight:600; font-size:0.9rem;">
-                            <span>Earnings Ratio</span>
-                            <span id="efficiency-percent" style="color:var(--accent-primary)">78%</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div id="efficiency-bar" class="progress-bar-fill" style="width:78%"></div>
-                        </div>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:var(--text-secondary);">
-                        <div style="text-align:center"><div style="font-weight:700; color:var(--text-primary)">Inv: ₹24L</div></div>
-                        <div style="text-align:center"><div style="font-weight:700; color:var(--accent-primary)">Gen: ₹86L</div></div>
-                    </div>
-                </div>
-
-                <div class="insight-card">
-                    <div class="insight-header">
-                        <div class="insight-icon" style="background:var(--warning);"><i class="fas fa-tachometer-alt" style="color:black"></i></div>
-                        <div><div style="font-weight:700; color:var(--text-primary)">Velocity</div><div style="font-size:0.85rem; color:var(--text-secondary)">Annual Growth</div></div>
-                    </div>
-                    <div style="display:flex; justify-content:center; align-items:center; height:120px;">
-                         <div style="width:150px; height:75px; position:relative;">
-                            <div style="width:150px; height:75px; background:conic-gradient(from 180deg at 50% 100%, var(--danger) 0deg, var(--warning) 60deg, var(--success) 120deg, var(--success) 180deg); border-radius:150px 150px 0 0; mask:radial-gradient(at 50% 100%, transparent 60%, black 61%); -webkit-mask:radial-gradient(at 50% 100%, transparent 60%, black 61%);"></div>
-                            <div id="velocity-needle" style="position:absolute; bottom:0; left:50%; width:4px; height:70px; background:var(--text-primary); transform-origin:bottom center; transform:translateX(-50%) rotate(-90deg)"></div>
-                        </div>
-                        <div id="velocity-value" style="position:absolute; bottom:10px; font-size:1.5rem; font-weight:800; color:var(--text-primary)">12%</div>
-                    </div>
-                </div>
-
-                <div class="insight-card">
-                    <div class="insight-header">
-                        <div class="insight-icon" style="background:var(--success);"><i class="fas fa-hourglass-half"></i></div>
-                        <div><div style="font-weight:700; color:var(--text-primary)">Opportunity Cost</div><div style="font-size:0.85rem; color:var(--text-secondary)">Now vs 5 Yrs Later</div></div>
-                    </div>
-                    <div style="display:flex; align-items:center; justify-content:center; gap:20px;">
-                        <div style="flex:1; text-align:center;">
-                            <div id="bar-now" class="comparison-bar primary" style="height:100px; border-radius:12px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:10px; color:white; font-weight:bold; font-size:0.8rem;"></div>
-                            <div id="value-now" style="margin-top:10px; font-weight:600; color:var(--text-primary);">₹1.1Cr</div>
-                        </div>
-                        <div style="width:30px; height:30px; background:var(--text-primary); color:var(--card-bg); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;">VS</div>
-                        <div style="flex:1; text-align:center;">
-                            <div id="bar-later" class="comparison-bar secondary" style="height:60px; border-radius:12px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:10px; color:white; font-weight:bold; font-size:0.8rem;"></div>
-                            <div id="value-later" style="margin-top:10px; font-weight:600; color:var(--text-primary);">₹58L</div>
-                        </div>
-                    </div>
-                    <div style="text-align:center; margin-top:15px; padding:8px; background:rgba(245,101,101,0.1); color:var(--danger); border-radius:8px; font-size:0.85rem; font-weight:600;">
-                        Loss of <span id="loss-amount">₹52L</span> by waiting
-                    </div>
-                </div>
-
-                <div class="insight-card">
-                    <div class="insight-header">
-                        <div class="insight-icon" style="background:var(--text-primary)"><i class="fas fa-flag-checkered"></i></div>
-                        <div><div style="font-weight:700; color:var(--text-primary)">Milestones</div><div style="font-size:0.85rem; color:var(--text-secondary)">Targets Hit</div></div>
-                    </div>
-                    <div id="milestone-container" style="margin-top:15px; position:relative; padding-left:20px;">
-                        <!-- Dynamic -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="graph-card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h3 style="font-size:1.2rem; font-weight:700; color:var(--text-primary)">Growth Trajectory</h3>
-                    <button onclick="toggleChartType()" style="padding:6px 12px; border:1px solid var(--glass-border); background:transparent; color:var(--text-primary); border-radius:6px; cursor:pointer;"><i class="fas fa-chart-bar"></i> View</button>
-                </div>
-                <div style="position:relative; height:300px;">
-                    <canvas id="mainChart"></canvas>
-                </div>
-            </div>
-            
-             <div class="graph-card" style="margin-top:25px;">
-                 <h3 style="font-size:1.2rem; font-weight:700; color:var(--text-primary); margin-bottom:15px;">Portfolio Mix</h3>
-                 <div style="position:relative; height:200px;">
-                     <canvas id="pieChart"></canvas>
-                 </div>
-            </div>
-        </div>
-
-        <!-- Right Panel -->
-        <div class="controls-panel">
-            <div class="mode-tabs">
-                <button class="mode-tab active" onclick="setFinancialMode('sip')">SIP</button>
-                <button class="mode-tab" onclick="setFinancialMode('lumpsum')">Lumpsum</button>
-                <button class="mode-tab" onclick="setFinancialMode('target')">Target</button>
-            </div>
-            
-            <div style="margin-bottom:20px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-weight:600; font-size:0.9rem; color:var(--text-primary);">
-                    <span>Monthly Investment</span>
-                    <span class="value-badge" id="val-amount">₹10,000</span>
-                </div>
-                <input type="range" class="slider" id="amount" min="1000" max="100000" step="1000" value="10000">
-            </div>
-            
-            <div style="margin-bottom:20px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-weight:600; font-size:0.9rem; color:var(--text-primary);">
-                    <span>Time Period</span>
-                    <span class="value-badge" id="val-years">20 Years</span>
-                </div>
-                <input type="range" class="slider" id="years" min="1" max="40" step="1" value="20">
-            </div>
-            
-            <div style="margin-bottom:20px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-weight:600; font-size:0.9rem; color:var(--text-primary);">
-                    <span>Expected Return</span>
-                    <span class="value-badge" id="val-rate">12%</span>
-                </div>
-                <input type="range" class="slider" id="rate" min="1" max="30" step="0.5" value="12">
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-// Theme Logic
-function initTheme() {
-    const saved = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', saved);
-    updateIcon(saved);
-}
-function toggleTheme() {
-    const cur = document.documentElement.getAttribute('data-theme');
-    const next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    updateIcon(next);
-    calculateFinancial();
-}
-function updateIcon(theme) {
-    const i = document.getElementById('theme-icon');
-    const t = document.getElementById('theme-text');
-    if(theme==='dark'){ i.className='fas fa-sun'; t.textContent='Light Mode'; }
-    else { i.className='fas fa-moon'; t.textContent='Dark Mode'; }
-}
-
-// Calculator State
-let calcDisplay = '0';
-let memory = 0;
-let reset = false;
-
-function insert(v) { if(reset || calcDisplay=='0'){calcDisplay=''; reset=false;} calcDisplay+=v; update(); }
-function insertOp(o) { reset=false; calcDisplay+=' '+o+' '; update(); }
-function insFunc(f) {
-    if(reset){calcDisplay=''; reset=false;}
-    if(['sin','cos','tan','log','ln','sqrt','abs'].includes(f)) calcDisplay+=f+'(';
-    else if(f==='pi') insert('3.14159');
-    else if(f==='e') insert('2.71828');
-    else if(f==='sq') calcDisplay+='^2';
-    else if(f==='pow') calcDisplay+='^';
-    else if(f==='fact') calcDisplay+='!';
-    else if(f==='inv'){ calcDisplay='1/('+calcDisplay+')'; calculate(); return; }
-    update();
-}
-function clearAll() { calcDisplay='0'; document.getElementById('calc-history').textContent=''; update(); }
-function clearEntry() { calcDisplay='0'; update(); }
-function toggleSign() { calcDisplay = calcDisplay.startsWith('-') ? calcDisplay.substring(1) : '-' + calcDisplay; update(); }
-function update() { document.getElementById('calc-display').textContent = calcDisplay; }
-
-function calculate() {
-    try {
-        let expr = calcDisplay.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/\^/g,'**')
-            .replace(/sin\(/g,'Math.sin(').replace(/cos\(/g,'Math.cos(').replace(/tan\(/g,'Math.tan(')
-            .replace(/log\(/g,'Math.log10(').replace(/ln\(/g,'Math.log(').replace(/sqrt\(/g,'Math.sqrt(').replace(/abs\(/g,'Math.abs(');
-        expr = expr.replace(/(\d+)!/g,(m,n)=>{let r=1;for(let i=2;i<=parseInt(n);i++)r*=i;return r});
-        expr = expr.replace(/Math\.(sin|cos|tan)\(([^)]+)\)/g,'Math.$1(($2)*Math.PI/180)');
-        
-        const res = eval(expr);
-        document.getElementById('calc-history').textContent = calcDisplay+' =';
-        calcDisplay = parseFloat(res.toPrecision(10)).toString();
-        reset = true;
-        update();
-    } catch(e) { calcDisplay='Error'; reset=true; update(); }
-}
-
-function memClear(){memory=0;} function memRecall(){if(memory!=0)insert(memory.toString());}
-function memAdd(){try{memory+=eval(calcDisplay)}catch(e){memory+=parseFloat(calcDisplay)||0;}}
-function memSub(){try{memory-=eval(calcDisplay)}catch(e){memory-=parseFloat(calcDisplay)||0;}}
-function memStore(){try{memory=eval(calcDisplay)}catch(e){memory=parseFloat(calcDisplay)||0;}}
-
-function transfMon(){let v=parseFloat(calcDisplay);if(!isNaN(v)&&v>=1000&&v<=100000){document.getElementById('amount').value=Math.floor(v);updateLabels();calculateFinancial();}}
-function transfYr(){let v=parseFloat(calcDisplay);if(!isNaN(v)&&v>=1&&v<=40){document.getElementById('years').value=Math.floor(v);updateLabels();calculateFinancial();}}
-function transfRt(){let v=parseFloat(calcDisplay);if(!isNaN(v)&&v>=1&&v<=30){document.getElementById('rate').value=v;updateLabels();calculateFinancial();}}
-function loadCalc(type){const t=document.getElementById('stat-'+type).textContent; const n=parseFloat(t.replace(/[₹,CrL]/g,'')); calcDisplay=t.includes('Cr')?(n*10000000).toString():t.includes('L')?(n*100000).toString():n.toString(); reset=true; update();}
-
-// Financial Logic
-function setupInputs() { ['amount','years','rate'].forEach(id => document.getElementById(id).addEventListener('input', ()=>{updateLabels(); calculateFinancial()})); }
-function updateLabels() {
-    document.getElementById('val-amount').textContent = '₹' + parseInt(document.getElementById('amount').value).toLocaleString();
-    document.getElementById('val-years').textContent = document.getElementById('years').value + ' Years';
-    document.getElementById('val-rate').textContent = document.getElementById('rate').value + '%';
-}
-
-let chartInst, pieInst, ctype='line';
-
-function calculateFinancial() {
-    const P = parseInt(document.getElementById('amount').value);
-    const years = parseInt(document.getElementById('years').value);
-    const rate = parseFloat(document.getElementById('rate').value);
-    
-    const months = years*12;
-    const r = rate/100/12;
-    const invested = P*months;
-    const fv = r===0?P*months:P*((Math.pow(1+r,months)-1)/r)*(1+r);
-    const returns = fv-invested;
-    
-    // UI Updates
-    document.getElementById('stat-invested').textContent = fmt(invested);
-    document.getElementById('stat-returns').textContent = fmt(returns);
-    document.getElementById('stat-total').textContent = fmt(fv);
-    
-    // Visuals
-    upVis(invested, returns, fv, years, rate);
-    
-    // Charts
-    upCharts(P, years, rate, invested, fv, returns);
-}
-
-function upVis(inv, ret, tot, y, rate) {
-    const eff = tot>0?(ret/tot)*100:0;
-    document.getElementById('efficiency-percent').textContent = eff.toFixed(0)+'%';
-    document.getElementById('efficiency-bar').style.width = eff+'%';
-    
-    const angle = -90 + ((rate/30)*180);
-    document.getElementById('velocity-needle').style.transform = `translateX(-50%) rotate(${angle}deg)`;
-    document.getElementById('velocity-value').textContent = rate+'%';
-    
-    const now = tot;
-    const later = simpleSIP(parseInt(document.getElementById('amount').value), Math.max(1, y-5), parseFloat(document.getElementById('rate').value));
-    
-    document.getElementById('value-now').textContent = fmt(now);
-    document.getElementById('value-later').textContent = fmt(later);
-    document.getElementById('loss-amount').textContent = fmt(now-later);
-    
-    document.getElementById('bar-now').style.height='100px';
-    document.getElementById('bar-later').style.height = (later/Math.max(now,1)*100)+'px';
-    
-    upMil(parseInt(document.getElementById('amount').value), y, rate);
-}
-
-function simpleSIP(m, y, r) { const mo=y*12; const ri=r/100/12; if(ri===0)return m*mo; return m*((Math.pow(1+ri,mo)-1)/ri)*(1+ri); }
-
-function upMil(P, y, r) {
-    const c = document.getElementById('milestone-container');
-    let html='<div style="position:absolute; left:10px; top:0; bottom:0; width:2px; background:var(--text-secondary); opacity:0.5"></div>';
-    const targets=[1000000, 5000000, 10000000];
-    targets.forEach(t=>{
-        for(let k=1;k<=y;k++){
-            if(simpleSIP(P,k,r)>=t){
-                html+=`<div style="position:relative; margin-bottom:15px; padding:10px; background:var(--card-bg); border-left:3px solid var(--accent-primary); border-radius:8px; box-shadow:var(--shadow-light);">
-                    <div style="font-size:0.8rem; font-weight:700; color:var(--accent-primary)">Year ${k}</div>
-                    <div style="font-size:1rem; font-weight:800; color:var(--text-primary)">${fmt(t)}</div>
-                </div>`;
-                break;
-            }
-        }
-    });
-    c.innerHTML=html;
-}
-
-function upCharts(P, y, r, inv, fv, ret) {
-    const labels=[], invD=[], valD=[];
-    const colP = getComputedStyle(document.body).getPropertyValue('--accent-primary').trim();
-    const colS = getComputedStyle(document.body).getPropertyValue('--text-secondary').trim();
-    const colT = getComputedStyle(document.body).getPropertyValue('--text-primary').trim();
-    
-    for(let k=1;k<=y;k++){
-        labels.push('Y'+k);
-        const km=k*12; const kr=r/100/12;
-        invD.push(P*k*12);
-        valD.push(kr===0?P*km:P*((Math.pow(1+kr,km)-1)/kr)*(1+kr));
-    }
-    
-    if(chartInst)chartInst.destroy();
-    chartInst=new Chart(document.getElementById('mainChart'),{
-        type:ctype, data:{labels, datasets:[
-            {label:'Invested', data:invD, borderColor:colS, backgroundColor:'transparent', borderWidth:2, tension:0.4},
-            {label:'Value', data:valD, borderColor:colP, backgroundColor:colP+'20', fill:true, borderWidth:3, tension:0.4}
-        ]}, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{color:colT}}}, scales:{y:{ticks:{callback:fmt, color:colS}}, x:{ticks:{color:colS}}}}
-    });
-    
-    if(pieInst)pieInst.destroy();
-    const colW = getComputedStyle(document.body).getPropertyValue('--warning').trim();
-    pieInst=new Chart(document.getElementById('pieChart'),{
-        type:'doughnut', data:{labels:['Principal','Returns'], datasets:[{data:[inv,ret], backgroundColor:[colW,colP]}]},
-        options:{responsive:true, maintainAspectRatio:false, cutout:'70%', plugins:{legend:{position:'bottom', labels:{color:colT}}}}
-    });
-}
-
-function fmt(n) { if(n>=10000000)return'₹'+(n/10000000).toFixed(2)+'Cr'; if(n>=100000)return'₹'+(n/100000).toFixed(1)+'L'; if(n>=1000)return'₹'+(n/1000).toFixed(0)+'K'; return'₹'+Math.floor(n); }
-function toggleChartType() { ctype=ctype==='line'?'bar':'line'; calculateFinancial(); }
-function setFinancialMode(m) { 
-    document.querySelectorAll('.mode-tab').forEach(t=>t.classList.remove('active'));
-    event.target.classList.add('active');
-}
-
-// Init
-setupInputs(); calculateFinancial();
-initTheme();
-</script>
+    <script src="app.js"></script>
 </body>
 </html>
